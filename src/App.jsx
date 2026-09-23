@@ -1,9 +1,22 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import Navbar from "./components/layout/Navbar"
+import Body from "./Body"
+import Login from "./Login"
+import Profile from "./Profile"
 
 const App = () => {
   return (
-    <div className='bg-red-500'>
-      <h1>Hello</h1>
-    </div>
+  <>
+  <BrowserRouter basename="/">
+    <Routes>
+      <Route path="/" element={<Body/>} >
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/profile" element={<Profile/>}/>
+      </Route>
+    </Routes>
+  </BrowserRouter>
+
+  </>
   )
 }
 
