@@ -1,8 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import Navbar from "./components/layout/Navbar"
 import Body from "./Body"
-import Login from "./Login"
 import Profile from "./Profile"
+import Login from "./components/auth/Login"
 
 const App = () => {
   return (
