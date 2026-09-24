@@ -1,9 +1,23 @@
+import axios from "axios";
 import { useState } from "react"
 
 
 const Login = () => {
-   const [emailId, setEmailId] = useState("");
-   const [password, setPassword] = useState("");
+   const [email, setEmailId] = useState("kajal@gmail.com");
+   const [password, setPassword] = useState("Kajal@123");
+
+   const handleLogin = async()=>{
+    try{
+      const res = await axios.post("http://localhost:3000/login",{
+        email,password
+      },{withCredentials:true})
+      console.log("login btn clicked")
+      console.log(res);
+    }catch(err){
+      console.log("something went wrong while login", err)
+    }
+   }
+
   return (
     <div className="flex justify-center items-center mt-30">
 
@@ -12,12 +26,12 @@ const Login = () => {
   <legend className="fieldset-legend">Login</legend>
 
   <label className="label">Email</label>
-  <input value={emailId} onChange={(e)=>setEmailId(e.target.value)} type="email" className="input" placeholder="Email" />
+  <input value={email} onChange={(e)=>setEmailId(e.target.value)} type="email" className="input" placeholder="Email" />
 
   <label className="label">Password</label>
   <input value={password} onChange={(e)=>setPassword(e.target.value)} type="password" className="input" placeholder="Password" />
 
-  <button className="btn btn-neutral mt-4">Login</button>
+  <button onClick={handleLogin} className="btn btn-neutral mt-4">Login</button>
 </fieldset>
 </div>
 )
