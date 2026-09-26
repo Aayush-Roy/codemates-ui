@@ -5,7 +5,7 @@ import { useState } from "react"
 const Login = () => {
    const [email, setEmailId] = useState("kajal@gmail.com");
    const [password, setPassword] = useState("Kajal@123");
-const username = null;
+
 
    const handleLogin = async()=>{
     try{
