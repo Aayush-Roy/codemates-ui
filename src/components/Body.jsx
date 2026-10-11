@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import Navbar from './layout/Navbar'
 import Footer from './layout/Footer'
 import axios from 'axios'
@@ -9,17 +9,7 @@ import { useEffect } from 'react'
 
 const Body = () => {
   const dispatch = useDispatch();
-  // const fetchUser = async()=>{
-  //   try{
-  //     const res = await axios.get(`${BASE_URL}/profile/view`, {
-  //       withCredentialsL:true
-  //     });
-  //     console.log(res.data)
-  //     dispatch(addUser(res.data));
-  //   }catch(err){
-  //     console.log("Error", err)
-  //   }
-  // }
+  const navigate = useNavigate();
   const fetchUser = async () => {
   try {
     const res = await axios.get(`${BASE_URL}/profile/view`, {
@@ -30,6 +20,7 @@ const Body = () => {
 
     dispatch(addUser(res.data));
   } catch (err) {
+    navigate("/login")
     console.log("REFRESH ERROR:", err.response?.status);
     console.log("REFRESH ERROR:", err.response?.data);
   }
