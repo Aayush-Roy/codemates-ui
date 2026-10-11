@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { HttpStatusCode } from "axios";
 import { useState } from "react"
 import { useDispatch } from "react-redux";
 import { addUser } from "../../utils/userSlice";
@@ -9,22 +9,25 @@ import { BASE_URL } from "../../utils/constants";
 const Login = () => {
    const [email, setEmailId] = useState("kajal@gmail.com");
    const [password, setPassword] = useState("Kajal@123");
+   const[error,setError] = useState("")
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-   const handleLogin = async()=>{
-    try{
-      const res = await axios.post(`${BASE_URL}/login`,{
-        email,password
-      },{withCredentials:true})
-      console.log("login btn clicked")
-      console.log(res);
-      dispatch(addUser(res.data));
-      return navigate("/")
-    }catch(err){
-      console.log("something went wrong while login", err)
-    }
-   }
+    const handleLogin = async()=>{
+      try{
+        const res = await axios.post(`${BASE_URL}/login`,{
+          email,password
+        },{withCredentials:true})
+        console.log("login btn clicked")
+        console.log(res);
+        dispatch(addUser(res.data));
+        return navigate("/")
+      }catch(err){
+       
+        setError(err.response?.data?.message)
+        console.log("Error",err.response)
+      }
+    }  
 
   return (
     <div className="flex justify-center items-center mt-30">
@@ -38,7 +41,7 @@ const Login = () => {
 
   <label className="label">Password</label>
   <input value={password} onChange={(e)=>setPassword(e.target.value)} type="password" className="input" placeholder="Password" />
-
+  <p className="text-red-500">{error}</p>
   <button onClick={handleLogin} className="btn btn-neutral mt-4">Login</button>
 </fieldset>
 </div>
