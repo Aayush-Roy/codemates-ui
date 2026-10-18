@@ -1,10 +1,13 @@
 import axios from 'axios';
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import React, { use, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { BASE_URL } from '../../utils/constants';
 import UserCard from './UserCard';
+import { addUser } from '../../utils/userSlice';
 
 const EditProfile = ({user}) => {
+  console.log("users from props", {user})
+ 
      const [firstName, setFirstName] = useState(user?.firstName);
        const [lastName,setLastName] = useState(user.lastName);
        const [age,setAge] = useState(user.age || "")
@@ -12,16 +15,45 @@ const EditProfile = ({user}) => {
        const [gender, setGender] = useState(user.gender || "");
        const[error,setError] = useState("")
        const [photoUrl, setPhotoUrl] = useState(user.photoUrl);
-       const handleEditProfile = async()=>{
-        try{
-            const res = await axios.patch(`${BASE_URL}/profile/edit`,{
-                firstName, lastName, age, about, gender, photoUrl
-            }, {withCredentials:true})
-            console.log("profile updated", res.data)
-        }catch(err){
-            console.log("Something went wrong in Edit profile: ", err)
-        }
-       }
+       const dispatch = useDispatch();
+      //  const handleEditProfile = async()=>{
+      //   try{
+      //       const res = await axios.patch(`${BASE_URL}/profile/edit`,{
+      //           firstName, lastName, age, about, gender, photoUrl
+      //       }, {withCredentials:true})
+      //       console.log("profile updated", res.data)
+      //   }catch(err){
+      //       console.log("Something went wrong in Edit profile: ", err)
+      //   }
+      //  }
+
+      const handleEditProfile = async () => {
+  try {
+     setError("")
+    const res = await axios.patch(
+      `${BASE_URL}/profile/edit`,
+      {
+        firstName,
+        lastName,
+        age: age === "" ? undefined : Number(age),
+        about,
+        gender,
+        photoUrl,
+      },
+      { withCredentials: true }
+    );
+    addUser(res.data?.data)
+    console.log("Profile updated:", res.data);
+    setError("");
+  } catch (err) {
+    console.log("profile Edit Error: ", err)
+    console.error(
+      "Edit profile error:",
+      err.response?.data || err.message
+    );
+    setError(err.response?.data?.message || err.message);
+  }
+};
   return (
     <>
     <div className='flex justify-center items-center' >
@@ -56,7 +88,7 @@ const EditProfile = ({user}) => {
 </div>
 
     {/* {profile info} */}
-    <UserCard/>
+    <UserCard users={{firstName, lastName, age, gender, about, photoUrl}}/>
 
     </div>
     </>

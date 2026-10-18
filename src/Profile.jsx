@@ -5,9 +5,12 @@ const Profile = () => {
   const user = useSelector(store=>store.user);
   console.log("userinfo in pro", user)
   return (
-    <div>
+    user && (
+      <div>
      <EditProfile user={user}/>
     </div>
+    )
+    
   )
 }
 
