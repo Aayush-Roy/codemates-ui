@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect } from 'react'
 import { BASE_URL } from '../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
-import { addRequest } from '../utils/requestSlice'
+import { addRequest, removeRequest } from '../utils/requestSlice'
 
 const Request = () => {
     const dispatch = useDispatch()
@@ -10,6 +10,7 @@ const Request = () => {
     const handleAccecptConnectionRequest = async(requsetId,status)=>{
       try{
         const res = await axios.post(`${BASE_URL}/request/review/${status}/${requsetId}`,{},{withCredentials:true})
+        dispatch(removeRequest(requsetId));
       }catch(err){
         console.log("Something went wrong from accepting connection request", err)
       }
