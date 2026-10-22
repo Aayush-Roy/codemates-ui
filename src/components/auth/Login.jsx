@@ -7,8 +7,11 @@ import { BASE_URL } from "../../utils/constants";
 
 
 const Login = () => {
-   const [email, setEmailId] = useState("aayush@gmail.com");
-   const [password, setPassword] = useState("Aayush@123");
+  const[firstName,setFirstName] = useState("")
+  const[lastName,setLastName] = useState("")
+  const[isLoginForm,setIsLoginForm] = useState(true)
+   const [email, setEmailId] = useState("");
+   const [password, setPassword] = useState("");
    const[error,setError] = useState("")
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,7 +37,13 @@ const Login = () => {
 
     
     <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-  <legend className="fieldset-legend">Login</legend>
+  <legend className="fieldset-legend">{ isLoginForm ?  'Login' : 'Sign-up'}</legend>
+
+      <label className="label">First Name</label>
+  <input value={email} onChange={(e)=>setFirstName(e.target.value)}  className="input" placeholder="first name" />
+
+  <label className="label">Last Name</label>
+  <input value={password} onChange={(e)=>setLastName(e.target.value)}  className="input" placeholder="last name" />
 
   <label className="label">Email</label>
   <input value={email} onChange={(e)=>setEmailId(e.target.value)} type="email" className="input" placeholder="Email" />
