@@ -7,7 +7,7 @@ import { addRequest, removeRequest } from '../utils/requestSlice'
 const Request = () => {
     const dispatch = useDispatch()
     const requests = useSelector(store=>store.request)
-    const handleAccecptConnectionRequest = async(requsetId,status)=>{
+    const handleAccecptandRejectConnectionRequest = async(requsetId,status)=>{
       try{
         const res = await axios.post(`${BASE_URL}/request/review/${status}/${requsetId}`,{},{withCredentials:true})
         dispatch(removeRequest(requsetId));
@@ -63,10 +63,10 @@ return (
                 </div>
 
                 <div className="flex flex-col gap-2 sm:flex-row">
-                  <button onClick={()=>handleAccecptConnectionRequest(req?._id,"accepted")} className="btn btn-success btn-sm">
+                  <button onClick={()=>handleAccecptandRejectConnectionRequest(req?._id,"accepted")} className="btn btn-success btn-sm">
                     Accept
                   </button>
-                  <button className="btn btn-error btn-outline btn-sm">
+                  <button onClick={()=>handleAccecptandRejectConnectionRequest(req?._id,"rejected")} className="btn btn-error btn-outline btn-sm">
                     Reject
                   </button>
                 </div>
