@@ -4,10 +4,11 @@ import { useEffect } from "react";
 import { BASE_URL } from "../utils/constants";
 import { addConnection } from "../utils/connectionsSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 const Connections = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const connections = useSelector(
     (store) => store.connection
   );
@@ -105,6 +106,11 @@ return (
                     {c.about}
                   </p>
                 )}
+                <Link to={`/chat/${c._id}`}>
+                
+                <button className="cursor-pointer bg-blue-600 px-6 py-4">Chat</button>
+                </Link>
+                
               </div>
             </div>
           ))}

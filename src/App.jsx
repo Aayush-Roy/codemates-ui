@@ -8,6 +8,7 @@ import Feed from "./components/Feed"
 import Connections from "./components/Connections"
 import Request from "./components/Request"
 import Premium from "./components/Premium"
+import Chat from "./components/chat/Chat"
 
 const App = () => {
   return (
@@ -22,7 +23,9 @@ const App = () => {
         <Route path="/connections" element={<Connections/>}/>
         <Route path="/requests" element={<Request/>}/>
          <Route path="/premium" element={<Premium/>}/>
+          
       </Route>
+      <Route path="/chat/:targetUserId" element={<Chat/>}/>
     </Routes>
   </BrowserRouter>
   </Provider>
