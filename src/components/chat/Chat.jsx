@@ -1,18 +1,31 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
+import { createSocketConnection } from "../../utils/socket";
+import { useSelector } from "react-redux";
 
 const Chat = () => {
   const { targetUserId } = useParams();
   const [message, setMessage] = useState("");
   const messagesEndRef = useRef(null);
-
+  const user = useSelector(store=>store.user);
+  const userId = user?._id;
   const [messages, setMessages] = useState([
     { id: 1, text: "Hey! How are you?", sender: "other", time: "10:30 AM" },
     { id: 2, text: "I'm good! What about you?", sender: "me", time: "10:32 AM" },
     { id: 3, text: "What are you working on?", sender: "other", time: "10:33 AM" },
     { id: 4, text: "Building something awesome 🚀", sender: "me", time: "10:35 AM" },
   ]);
+
+
+  useEffect(()=>{
+    if (!userId) return;
+    const socket = createSocketConnection();
+    socket.emit("joinChat",{firstName: user.firstName, userId, targetUserId})
+    return()=>{
+      socket.disconnect()
+    }
+  },[userId, targetUserId])
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
