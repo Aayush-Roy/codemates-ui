@@ -97,8 +97,8 @@ const Navbar = () => {
       {/* Logo */}
       <div className="flex-1">
         <Link to="/" className="flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-secondary text-lg font-bold text-white">
-            {"</>"}
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl ">
+          <img src="/logo.png" alt="" />
           </span>
           <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-xl font-extrabold text-transparent">
             Code Mates
